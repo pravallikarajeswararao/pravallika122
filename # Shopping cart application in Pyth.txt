@@ -1,0 +1,39 @@
+# Shopping cart application in Python
+
+class ShoppingCart:
+    def _init_(self):
+        self.items = {}
+
+    def add_item(self, item_name, quantity, price):
+        if item_name in self.items:
+            self.items[item_name]['quantity'] += quantity
+        else:
+            self.items[item_name] = {'quantity': quantity, 'price': price}
+
+    def remove_item(self, item_name, quantity):
+        if item_name in self.items:
+            if quantity < self.items[item_name]['quantity']:
+                self.items[item_name]['quantity'] -= quantity
+            else:
+                del self.items[item_name]
+
+    def view_cart(self):
+        total_cost = 0
+        if not self.items:
+            print("Your shopping cart is empty.")
+        else:
+            print("Here are the items in your shopping cart:")
+            for item_name, item_data in self.items.items():
+                item_total = item_data['quantity'] * item_data['price']
+                total_cost += item_total
+                print(f"{item_name} ({item_data['quantity']}) - {item_total}")
+            print(f"Total cost: {total_cost}")
+
+# Example usage:
+cart = ShoppingCart()
+cart.add_item('apple', 3, 1.5)
+cart.add_item('banana', 2, 2.0)
+cart.add_item('orange', 1, 1.0)
+cart.view_cart()
+cart.remove_item('apple', 2)
+cart.view_cart()
